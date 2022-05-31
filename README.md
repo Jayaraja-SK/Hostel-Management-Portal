@@ -1,7 +1,17 @@
-# Temp
+# Hostel Management Portal
 
-- Create a React App - `npx create-react-app myapp`
+## React JS
+
+- Go to `React JS/firstapp`
 - Install dependencies - `npm install`
 - Start a React App - `npm start`
+- React App runs in port - 3000
 
-- Start Node JS Server - `node app.js`
+
+## Node JS
+
+- Go to `React JS/firstapp`
+- Configure `.env` file by adding your MySQL Database name and Password
+- Install dependencies - `npm install`
+- Start the server - `node app.js`
+- Node runs in port - 8080
