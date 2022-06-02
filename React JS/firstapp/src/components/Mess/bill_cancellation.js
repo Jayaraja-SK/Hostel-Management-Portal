@@ -45,7 +45,7 @@ const ViewBillCancellationByFilter = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
 
@@ -167,7 +167,7 @@ const ViewStudentsList = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
         var i;
@@ -182,7 +182,7 @@ const ViewStudentsList = () => {
 
       setCampus(res.data);
     });
-  }, []);
+  });
 
   const changeHandler = (e) => {
     setFilter({ ...filter, [e.target.name]: e.target.value });
@@ -235,11 +235,11 @@ const ViewStudentsList = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
 
-        document.getElementById("filter").reset();
+        //document.getElementById("filter").reset();
         setData(res.data);
       });
   };
@@ -408,7 +408,7 @@ const ViewStudentBillCancellations = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
         console.log(res.data)

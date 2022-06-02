@@ -22,7 +22,7 @@ const Login = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-
+		
 		axios.post("http://localhost:8080/login", data).then((res) => {
 			if(res.data.bool === false)
 			{

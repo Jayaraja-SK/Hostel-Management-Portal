@@ -129,12 +129,13 @@ body{
     color: #cacaca;
   }
 
-  .wrapper .main_content .info .container form input, select{
+  .wrapper .main_content .info .container form input, select, textarea{
     padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   color: black;
   background-color: #cacaca;
+  width: 140px;
   }
 
   .wrapper .main_content .info .container form select option{
@@ -202,9 +203,9 @@ body{
     margin-right: 5px;
   }
 
-  .wrapper .main_content .info  tr:nth-child(even) {
+  /*.wrapper .main_content .info  tr:nth-child(even) {
     background-color: #7c7a7a
-  }
+  }*/
   
   .wrapper .main_content .info  th {
     background-color: #04AA6D;

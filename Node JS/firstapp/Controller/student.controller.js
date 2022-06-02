@@ -1,5 +1,8 @@
 const res = require('express/lib/response');
 var studentService = require('../Service/student.service');
+var file = require('../file.controller');
+
+var fd = require('fs');
 
 
 exports.addLeaveForm = function (request,response) {
@@ -20,13 +23,13 @@ exports.getLeaveForms = function (request,response) {
 }
 
 
-exports.getStudentDetails = function (request,response) {
-    studentService.getStudentDetails(request.body.data.email_id,  function(result){
+/*exports.getStudentDetails = function (request,response) {
+    studentService.getStudentDetails(request.params.user_id,  function(result){
         response.send(result);
 
     });
 
-}
+}*/
 
 
 exports.addComplaintReg= function (request,response) {
@@ -71,4 +74,26 @@ exports.changePassword= function (request,response) {
 
     });
 
+}
+
+
+exports.addFile = function (request,response) {
+    studentService.getStudentDetailsLeaveForm(request.body.temp.request_id, request.body.temp.user_id, function(result){
+        response.send();
+
+        file.createInvoice(result[0],'./Service/Leave_Requests/'+request.body.temp.request_id+'.pdf' , function(result) {
+
+        })
+
+    });
+}
+
+
+exports.getFile = function (request,response) {
+
+    studentService.getFileName(request.params.request_id, function(result){
+        response.sendFile(result);
+        //fd.unlinkSync(result, function(result){});
+    });
+    
 }

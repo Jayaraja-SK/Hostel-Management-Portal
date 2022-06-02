@@ -44,7 +44,7 @@ const ViewAllComplaints = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
         var i;

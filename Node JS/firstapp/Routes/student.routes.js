@@ -13,7 +13,9 @@ router.post("/leave_form",cors(),studentController.addLeaveForm);
 
 router.get("/leave_forms/:student_id",cors(),studentController.getLeaveForms);
 
-router.get("/personal_details",cors(),studentController.getStudentDetails);
+router.post("/add_leave_form_file",cors(),studentController.addFile);
+
+router.get("/get_leave_form_file/:request_id",cors(),studentController.getFile);
 
 router.post("/complaint_reg",cors(),studentController.addComplaintReg);
 

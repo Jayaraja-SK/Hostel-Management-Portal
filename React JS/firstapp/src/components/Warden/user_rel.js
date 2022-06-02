@@ -62,7 +62,7 @@ const AddWardenStudentRel = () => {
 			setWardens(res.data);
 		});
 
-	},[]);
+	});
 	
 	const [data, setData] = useState({
 		warden_id: null,
@@ -173,7 +173,7 @@ const ViewWardenStudentRel = () => {
 
 			if(res.data.length === 0)
 			{
-				notify("NO RECORDS FOUND");
+				//notify("NO RECORDS FOUND");
 			}
 
 			var i;
@@ -186,7 +186,7 @@ const ViewWardenStudentRel = () => {
 			setData(res.data);
 		});
 
-	},[]);
+	});
 
 	const deleteHandler = (warden_id,campus_id,batch) => {
         axios.delete("http://localhost:8080/warden/warden_student/warden_id="+warden_id+"&&campus_id="+campus_id+"&&batch="+batch,{ headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data}).then((res) => {
@@ -307,7 +307,7 @@ const AddMessStudentRel = () => {
 			setMess(res.data);
 		});
 
-	},[]);
+	});
 	
 	const [data, setData] = useState({
 		mess_id: null,
@@ -418,7 +418,7 @@ const ViewMessStudentRel = () => {
 
 			if(res.data.length === 0)
 			{
-				notify("NO RECORDS FOUND");
+				//notify("NO RECORDS FOUND");
 			}
 			
 			var i;
@@ -431,7 +431,7 @@ const ViewMessStudentRel = () => {
 			setData(res.data);
 		});
 
-	},[]);
+	});
 
 	const deleteHandler = (mess_id,campus_id,batch) => {
         axios.delete("http://localhost:8080/warden/mess_student/mess_id="+mess_id+"&&campus_id="+campus_id+"&&batch="+batch, { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data}).then((res) => {

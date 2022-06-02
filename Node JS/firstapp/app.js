@@ -6,9 +6,8 @@ const req = require("express/lib/request");
 const auth=require('./middleware/auth');
 
 
-
 var corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: '*',
     optionsSuccessStatus: 200
 }
 
@@ -33,6 +32,7 @@ var warden = require("./Routes/warden.routes");
 var sub_warden = require("./Routes/subwarden.routes");
 
 var mess = require("./Routes/mess.routes");
+const res = require("express/lib/response");
 
 
 
@@ -60,3 +60,13 @@ app.post("/login",cors(),loginController.validateUser);
 app.listen(8080, function () {
     console.log("APPLICATION STARTED ON PORT %d\n",8080)
 });
+
+
+/*app.get("/file/:request_id", function (request, response) {
+    //createInvoice({},'./Leave_Requests/'+request.params.request_id+'.pdf')
+    response.sendFile(__dirname+'/Leave_Requests/'+request.params.request_id+'.pdf')
+}
+);*/
+
+
+

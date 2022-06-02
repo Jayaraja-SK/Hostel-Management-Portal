@@ -78,19 +78,21 @@ const ViewCampus = () => {
 
 	const [data, setData] = useState([]);
 
+	var value;
+
 	useEffect(() => {
 		axios.get("http://localhost:8080/warden/campus",{ headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")}}).then((res) => {
 			if(res.data.length === 0)
 			{
-				notify("NO RECORDS FOUND");
+				//notify("NO RECORDS FOUND");
 			}
 			
 			setData(res.data);
 		});
 
-	},[]);
+	});
 
-	const editHandler = (id,name,loc) => {
+	/*const editHandler = (id,name,loc) => {
 		sessionStorage.setItem("campus_id",id);
 		sessionStorage.setItem("campus_name",name);
 		sessionStorage.setItem("campus_loc",loc);
@@ -112,6 +114,38 @@ const ViewCampus = () => {
 		sessionStorage.setItem("campus_loc",loc);
 
 		navigate("/warden_dashboard/view_courses");
+	}*/
+
+
+	const changeHandler = (e) => {
+		value = e.target.value;
+	  };
+
+
+	const setOption = (id,name,loc) => {
+		if(value === '1')
+		{
+			sessionStorage.setItem("campus_id",id);
+			sessionStorage.setItem("campus_name",name);
+			sessionStorage.setItem("campus_loc",loc);
+
+			navigate("/warden_dashboard/view_courses");
+		}
+		else if(value === '2')
+		{
+			sessionStorage.setItem("campus_id",id);
+			sessionStorage.setItem("campus_name",name);
+			sessionStorage.setItem("campus_loc",loc);
+
+			navigate("/warden_dashboard/edit_campus");
+		}
+		else if(value === '3')
+		{
+			axios.delete("http://localhost:8080/warden/campus/"+id, { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data} ).then((res) => {
+
+				window.location.reload();
+			});
+		}
 	}
 
 
@@ -139,10 +173,17 @@ const ViewCampus = () => {
 									<td className="td-btn"><button onClick={() => editHandler(data.campus_id, data.campus_name, data.campus_loc)}>EDIT</button></td>
 									<td className="td-btn"><button onClick={() => deleteHandler(data.campus_id)}>DELETE</button></td> */}
 									<td>
-										<span className="td-btn"><button onClick={() => viewCourses(data.campus_id, data.campus_name, data.campus_loc)}>VIEW COURSES</button></span>
+										{/*<span className="td-btn"><button onClick={() => viewCourses(data.campus_id, data.campus_name, data.campus_loc)}>VIEW COURSES</button></span>
 										<span className="td-btn"><button onClick={() => editHandler(data.campus_id, data.campus_name, data.campus_loc)}>EDIT</button>
 											<button onClick={() => deleteHandler(data.campus_id)}>DELETE</button>
-										</span>
+										</span>*/}
+
+										<select name="options" id="options" onChange={(e) => {changeHandler(e);setOption(data.campus_id, data.campus_name, data.campus_loc)}}>
+											<option>OPTIONS</option>
+											<option value="1">VIEW COURSES</option>
+											<option value="2">EDIT CAMPUS</option>
+											<option value="3">DELETE CAMPUS</option>
+										</select>
 									</td>
 								</tr>
 							)}
@@ -264,7 +305,7 @@ const AddCourse = () => {
 			setCampus(res.data);
 		});
 
-	},[]);
+	});
 	
 	const [data, setData] = useState({
 		campus_id: null,
@@ -366,6 +407,8 @@ const ViewCourses = () => {
 
 	var campus_name, campus_loc;
 
+	var value;
+
 	useEffect(() => {
 		axios.get("http://localhost:8080/warden/campus/"+sessionStorage.getItem("campus_id")+"/courses", { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")}} ).then((res) => {
 			if(res.data === 'INVALID TOKEN' || res.data === 'NO TOKEN')
@@ -381,15 +424,15 @@ const ViewCourses = () => {
 
 			if(res.data.length === 0)
 			{
-				notify("NO RECORDS FOUND");
+				//notify("NO RECORDS FOUND");
 			}
 
 			setData(res.data)
 		});
 
-	},[]);
+	});
 
-	const editHandler = (id,degree,name,years) => {
+	/*const editHandler = (id,degree,name,years) => {
 		sessionStorage.setItem("course_id",id);
 		sessionStorage.setItem("degree",degree);
 		sessionStorage.setItem("course_name",name);
@@ -414,6 +457,41 @@ const ViewCourses = () => {
 
 			window.location.reload();
 		});
+	}*/
+
+
+	const changeHandler = (e) => {
+		value = e.target.value;
+	  };
+
+
+	const setOption = (id,degree,name,years) => {
+		if(value === '1')
+		{
+			sessionStorage.setItem("course_id",id);
+			sessionStorage.setItem("degree",degree);
+			sessionStorage.setItem("course_name",name);
+			sessionStorage.setItem("no_of_years",years);
+
+			navigate("/warden_dashboard/edit_course");
+		}
+		else if(value === '2')
+		{
+			axios.delete("http://localhost:8080/warden/campus/"+sessionStorage.getItem("campus_id")+"/course/"+id, { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")}} ).then((res) => {
+				if(res.data === 'INVALID TOKEN' || res.data === 'NO TOKEN')
+				{
+					navigate("/");
+					sessionStorage.clear();
+				}
+				else if(res.data === 'ACCESS DENIED')
+				{
+					navigate("/");
+					sessionStorage.clear();
+				}
+
+				window.location.reload();
+			});
+		}
 	}
 
 
@@ -444,10 +522,16 @@ const ViewCourses = () => {
 									<td>{data.course_name}</td>
 									<td>{data.no_of_years}</td>
 									<td>
-										<span className="td-btn">
+										{/*<span className="td-btn">
 											<button onClick={() => editHandler(data.course_id, data.degree, data.course_name, data.no_of_years)}>EDIT</button>
 											<button onClick={() => deleteHandler(data.course_id)}>DELETE</button>
-										</span>
+										</span>*/}
+
+										<select name="options" id="options" onChange={(e) => {changeHandler(e);setOption(data.course_id, data.degree, data.course_name, data.no_of_years)}}>
+											<option>OPTIONS</option>
+											<option value="1">EDIT COURSE</option>
+											<option value="2">DELETE</option>
+										</select>
 									</td>
 								</tr>
 							)}

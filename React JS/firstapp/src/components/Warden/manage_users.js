@@ -47,7 +47,7 @@ const AddStudent = () => {
 			setCampus(res.data);
 		});
 
-	},[]);
+	});
 	
 	const [data, setData] = useState({
 		email: "",
@@ -428,7 +428,7 @@ const EditUser = () => {
 
 			if(res.data === true)
 			{
-				document.getElementById("edit_user").reset();
+				//document.getElementById("edit_user").reset();
 				notify("DATA EDITED SUCCESSFULLY");
 			}
 			else
@@ -515,6 +515,7 @@ const EditWarden = () => {
 			sessionStorage.removeItem("warden_doj");
 
 			notify("DATA EDITED SUCCESSFULLY");
+			
 
 			navigate("/warden_dashboard/view_wardens");
     });
@@ -532,11 +533,11 @@ const EditWarden = () => {
 							<br/><br/>
 
 							<label>DOB</label>
-							<input type="date" id="dob" name="dob" defaultValue={sessionStorage.getItem("warden_dob")} onChange={changeHandler} />
+							<input type="date" id="warden_dob" name="warden_dob" defaultValue={data.warden_dob} onChange={changeHandler} />
 							<br/><br/>
 
 							<label>DOJ</label>
-							<input type="date" id="doj" name="doj" defaultValue={sessionStorage.getItem("warden_doj")} onChange={changeHandler} />
+							<input type="date" id="warden_doj" name="warden_doj" defaultValue={data.warden_doj} onChange={changeHandler} />
 							<br/><br/>
 							<br/><br/>
 
@@ -603,7 +604,7 @@ const EditStudent = () => {
 				setCampus(res.data);
 		  });
   
-	  },[]);
+	  });
   
   
   
@@ -672,7 +673,7 @@ const EditStudent = () => {
 
 			notify("DATA EDITED SUCCESSFULLY");
 
-			navigate("/warden_dashboard");
+			navigate("/warden_dashboard/view_students");
     });
 	}
 
@@ -688,7 +689,7 @@ const EditStudent = () => {
 							<br/><br/>
 
 							<label>DOB</label>
-							<input type="date" id="dob" name="dob" defaultValue={sessionStorage.getItem("student_dob")} onChange={changeHandler} />
+							<input type="date" id="dob" name="dob" defaultValue={data.dob} onChange={changeHandler} />
 							<br/><br/>
 
 							<label>Gender</label>
@@ -841,6 +842,8 @@ const ViewStudents = () => {
 		batch: null
 	  });
 
+	var value;
+
 	useEffect(() => {
 		axios.get("http://localhost:8080/warden/campus", { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data}).then((res) => {
 			if(res.data === 'INVALID TOKEN' || res.data === 'NO TOKEN')
@@ -868,7 +871,7 @@ const ViewStudents = () => {
 			setCampus(res.data);
 		});
 
-	},[]);
+	});
 
 
 	const changeHandler = (e) => {
@@ -904,7 +907,7 @@ const ViewStudents = () => {
     });
 	};
 
-	const editHandler1 = (id,name,email,contact) => {
+	/*const editHandler1 = (id,name,email,contact) => {
 		sessionStorage.setItem("edit_user_id",id);
 		sessionStorage.setItem("edit_name",name);
 		sessionStorage.setItem("edit_email",email);
@@ -974,6 +977,83 @@ const ViewStudents = () => {
 			
 			window.location.reload();
 		});
+	}*/
+
+
+	const changeHandler1 = (e) => {
+		value = e.target.value;
+	  };
+
+
+	const setOption = (id,name,email,dob,gender,room_no,campus_id,course_id,batch, contact) => {
+		if(value === '1')
+		{
+			sessionStorage.setItem("edit_user_id",id);
+			sessionStorage.setItem("edit_name",name);
+			sessionStorage.setItem("edit_email",email);
+			sessionStorage.setItem("edit_contact_no",contact);
+
+			navigate("/warden_dashboard/edit_user");
+		}
+		else if(value === '2')
+		{
+			sessionStorage.setItem("student_user_id",id);
+			sessionStorage.setItem("student_name",name);
+			sessionStorage.setItem("student_email",email);
+			sessionStorage.setItem("student_dob",dob);
+			sessionStorage.setItem("student_gender",gender);
+			sessionStorage.setItem("student_room_no",room_no);
+			sessionStorage.setItem("student_campus_id",campus_id);
+			sessionStorage.setItem("student_course_id",course_id);
+			sessionStorage.setItem("student_batch",batch);
+
+			var i;
+
+			for(i=0;i<campus.length;i++)
+			{
+				if(campus_id === campus[i].campus_id)
+				{
+					sessionStorage.setItem("student_campus_info",campus[i].value);
+					break;
+				}
+			}
+
+			for(i=0;i<courses.length;i++)
+			{
+				if(campus_id === campus[i].campus_id)
+				{
+					sessionStorage.setItem("student_course_info",courses[i].value);
+					break;
+				}
+			}
+
+			navigate("/warden_dashboard/edit_student");
+		}
+		else if(value === '3')
+		{
+			sessionStorage.setItem("pwd_user_id",id);
+			sessionStorage.setItem("pwd_email",email);
+			
+
+			navigate("/warden_dashboard/change_pwd");
+		}
+		else if(value === '4')
+		{
+			axios.delete("http://localhost:8080/warden/user/"+id, { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data}).then((res) => {
+				if(res.data === 'INVALID TOKEN' || res.data === 'NO TOKEN')
+				{
+					navigate("/");
+					sessionStorage.clear();
+				}
+				else if(res.data === 'ACCESS DENIED')
+				{
+					navigate("/");
+					sessionStorage.clear();
+				}
+				
+				window.location.reload();
+			});
+		}
 	}
 
 	const filterHandler = (e) => {
@@ -993,7 +1073,7 @@ const ViewStudents = () => {
 
 			if(res.data.length === 0)
 			{
-				notify("NO RECORDS FOUND");
+				//notify("NO RECORDS FOUND");
 			}
 
 			var i;
@@ -1074,12 +1154,20 @@ const ViewStudents = () => {
 									<td>{data.gender}</td>
 									<td>{data.room_no}</td>
 									<td>
-										<span className="td-btn">
+										{/*<span className="td-btn">
 											<button onClick={() => editHandler1(data.user_id, data.name, data.email, data.contact_no)}>EDIT ACCOUNT INFO</button>
 											<button onClick={() => editHandler2(data.user_id, data.name, data.email, data.dob, data.gender, data.room_no, data.campus_id, data.course_id, data.batch)}>EDIT PERSONAL INFO</button>
 											<button onClick={() => editHandler3(data.user_id,data.email)}>CHANGE PASSWORD</button>
 											<button onClick={() => deleteHandler(data.user_id)}>DELETE</button>
-										</span>
+										</span>*/}
+
+									<select name="options" id="options" onChange={(e) => {changeHandler1(e);setOption(data.user_id, data.name, data.email, data.dob, data.gender, data.room_no, data.campus_id, data.course_id, data.batch, data.contact_no)}}>
+											<option>OPTIONS</option>
+											<option value="1">EDIT ACCOUNT INFO</option>
+											<option value="2">EDIT PERSONAL INFO</option>
+											<option value="3">CHANGE PASSWORD</option>
+											<option value="4">DELETE</option>
+										</select>
 									</td>
 	
 								</tr>
@@ -1102,6 +1190,8 @@ const ViewMess = () => {
 
 	const [data, setData] = useState([]);
 
+	var value;
+
 	useEffect(() => {
 		axios.get("http://localhost:8080/warden/mess", { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data}).then((res) => {
 			if(res.data === 'INVALID TOKEN' || res.data === 'NO TOKEN')
@@ -1117,15 +1207,15 @@ const ViewMess = () => {
 
 			if(res.data.length === 0)
 			{
-				notify("NO RECORDS FOUND");
+				//notify("NO RECORDS FOUND");
 			}
 			
 			setData(res.data)
 		});
 
-	},[]);
+	});
 
-	const editHandler1 = (id,name,email,contact) => {
+	/*const editHandler1 = (id,name,email,contact) => {
 		sessionStorage.setItem("edit_user_id",id);
 		sessionStorage.setItem("edit_name",name);
 		sessionStorage.setItem("edit_email",email);
@@ -1170,6 +1260,58 @@ const ViewMess = () => {
 			
 			window.location.reload();
 		});
+	}*/
+
+
+	const changeHandler = (e) => {
+		value = e.target.value;
+	  };
+
+
+	const setOption = (id,name,email,company_name,company_loc, contact) => {
+		if(value === '1')
+		{
+			sessionStorage.setItem("edit_user_id",id);
+			sessionStorage.setItem("edit_name",name);
+			sessionStorage.setItem("edit_email",email);
+			sessionStorage.setItem("edit_contact_no",contact);
+
+			navigate("/warden_dashboard/edit_user");
+		}
+		else if(value === '2')
+		{
+			sessionStorage.setItem("mess_user_id",id);
+			sessionStorage.setItem("mess_name",name);
+			sessionStorage.setItem("mess_email",email);
+			sessionStorage.setItem("mess_company_name",company_name);
+			sessionStorage.setItem("mess_company_loc",company_loc);
+
+			navigate("/warden_dashboard/edit_mess");
+		}
+		else if(value === '3')
+		{
+			sessionStorage.setItem("pwd_user_id",id);
+			sessionStorage.setItem("pwd_email",email);
+
+			navigate("/warden_dashboard/change_pwd");
+		}
+		else if(value === '4')
+		{
+			axios.delete("http://localhost:8080/warden/user/"+id, { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data}).then((res) => {
+				if(res.data === 'INVALID TOKEN' || res.data === 'NO TOKEN')
+				{
+					navigate("/");
+					sessionStorage.clear();
+				}
+				else if(res.data === 'ACCESS DENIED')
+				{
+					navigate("/");
+					sessionStorage.clear();
+				}
+				
+				window.location.reload();
+			});
+		}
 	}
 
 
@@ -1201,12 +1343,20 @@ const ViewMess = () => {
 								<td>{data.company_name}</td>
 								<td>{data.company_loc}</td>
 								<td>
-									<span>
+									{/*<span>
 										<button onClick={() => editHandler1(data.user_id, data.name, data.email, data.contact_no)}>EDIT ACCOUNT INFO</button>
 										<button onClick={() => editHandler2(data.user_id, data.name, data.email, data.company_name, data.company_loc)}>EDIT PERSONAL INFO</button>
 										<button onClick={() => editHandler3(data.user_id,data.email)}>CHANGE PASSWORD</button>
 										<button onClick={() => deleteHandler(data.user_id)}>DELETE</button>
-									</span>
+									</span>*/}
+
+										<select name="options" id="options" onChange={(e) => {changeHandler(e);setOption(data.user_id, data.name, data.email, data.company_name, data.company_loc, data.contact_no)}}>
+											<option>OPTIONS</option>
+											<option value="1">EDIT ACCOUNT INFO</option>
+											<option value="2">EDIT PERSONAL INFO</option>
+											<option value="3">CHANGE PASSWORD</option>
+											<option value="4">DELETE</option>
+										</select>
 								</td>
 							</tr>
 						)}
@@ -1228,6 +1378,8 @@ const ViewWardens = () => {
 
 	const [data, setData] = useState([]);
 
+	var value;
+
 	useEffect(() => {
 		axios.get("http://localhost:8080/warden/wardens", { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data}).then((res) => {
 			if(res.data === 'INVALID TOKEN' || res.data === 'NO TOKEN')
@@ -1243,7 +1395,7 @@ const ViewWardens = () => {
 
 			if(res.data.length === 0)
 			{
-				notify("NO RECORDS FOUND");
+				//notify("NO RECORDS FOUND");
 			}
 
 			var i;
@@ -1257,9 +1409,9 @@ const ViewWardens = () => {
 			setData(res.data)
 		});
 
-	},[]);
+	});
 
-	const editHandler1 = (id,name,email,contact) => {
+	/*const editHandler1 = (id,name,email,contact) => {
 		sessionStorage.setItem("edit_user_id",id);
 		sessionStorage.setItem("edit_name",name);
 		sessionStorage.setItem("edit_email",email);
@@ -1275,8 +1427,6 @@ const ViewWardens = () => {
 		sessionStorage.setItem("warden_email",email);
 		sessionStorage.setItem("warden_dob",dob);
 		sessionStorage.setItem("warden_doj",doj);
-
-		console.log(sessionStorage.getItem("warden_dob"),sessionStorage.getItem("warden_doj"))
 
 		navigate("/warden_dashboard/edit_warden");
 
@@ -1307,6 +1457,59 @@ const ViewWardens = () => {
 			
 			window.location.reload();
 		});
+	}*/
+
+
+	const changeHandler = (e) => {
+		value = e.target.value;
+	  };
+
+
+	const setOption = (id,name,email,dob,doj,contact) => {
+		if(value === '1')
+		{
+			sessionStorage.setItem("edit_user_id",id);
+			sessionStorage.setItem("edit_name",name);
+			sessionStorage.setItem("edit_email",email);
+			sessionStorage.setItem("edit_contact_no",contact);
+
+			navigate("/warden_dashboard/edit_user");
+		}
+		else if(value === '2')
+		{
+			sessionStorage.setItem("warden_user_id",id);
+			sessionStorage.setItem("warden_name",name);
+			sessionStorage.setItem("warden_email",email);
+			sessionStorage.setItem("warden_dob",dob);
+			sessionStorage.setItem("warden_doj",doj);
+
+			navigate("/warden_dashboard/edit_warden");
+		}
+		else if(value === '3')
+		{
+			sessionStorage.setItem("pwd_user_id",id);
+			sessionStorage.setItem("pwd_email",email);
+			
+
+			navigate("/warden_dashboard/change_pwd");
+		}
+		else if(value === '4')
+		{
+			axios.delete("http://localhost:8080/warden/user/"+id, { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")},data}).then((res) => {
+				if(res.data === 'INVALID TOKEN' || res.data === 'NO TOKEN')
+				{
+					navigate("/");
+					sessionStorage.clear();
+				}
+				else if(res.data === 'ACCESS DENIED')
+				{
+					navigate("/");
+					sessionStorage.clear();
+				}
+				
+				window.location.reload();
+			});
+		}
 	}
 
 
@@ -1338,12 +1541,20 @@ const ViewWardens = () => {
 									<td>{data.dob}</td>
 									<td>{data.doj}</td>
 									<td>
-									<span>
-									<button onClick={() => editHandler1(data.user_id, data.name, data.email, data.contact_no)}>EDIT ACCOUNT INFO</button>
-									<button onClick={() => editHandler2(data.user_id, data.name, data.email, data.dob, data.doj)}>EDIT PERSONAL INFO</button>
-									<button onClick={() => editHandler3(data.user_id,data.email)}>CHANGE PASSWORD</button>
-									<button onClick={() => deleteHandler(data.user_id)}>DELETE</button>
-									</span>
+										{/*<span>
+										<button onClick={() => editHandler1(data.user_id, data.name, data.email, data.contact_no)}>EDIT ACCOUNT INFO</button>
+										<button onClick={() => editHandler2(data.user_id, data.name, data.email, data.dob, data.doj)}>EDIT PERSONAL INFO</button>
+										<button onClick={() => editHandler3(data.user_id,data.email)}>CHANGE PASSWORD</button>
+										<button onClick={() => deleteHandler(data.user_id)}>DELETE</button>
+										</span>*/}
+
+										<select name="options" id="options" onChange={(e) => {changeHandler(e);setOption(data.user_id, data.name, data.email, data.dob, data.doj, data.contact_no)}}>
+											<option>OPTIONS</option>
+											<option value="1">EDIT ACCOUNT INFO</option>
+											<option value="2">EDIT PERSONAL INFO</option>
+											<option value="3">CHANGE PASSWORD</option>
+											<option value="4">DELETE</option>
+										</select>
 									</td>
 								</tr>
 							)}

@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
+import fileDownload from 'js-file-download'
+
 
 function convertDateToUTC(date) {
 	var d = new Date(date);
 	return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
   }
-
 
 
 const ViewLeaveFormsStudent = () => {
@@ -34,7 +35,7 @@ const ViewLeaveFormsStudent = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
         var i;
@@ -44,11 +45,46 @@ const ViewLeaveFormsStudent = () => {
           res.data[i]["request_date"] = convertDateToUTC(res.data[i]["request_date"]);
           res.data[i]["from_date"] = convertDateToUTC(res.data[i]["from_date"]);
           res.data[i]["to_date"] = convertDateToUTC(res.data[i]["to_date"]);
+
+          if(res.data[i]["status"] === "ACCEPTED")
+          {
+            res.data[i]["button"] = "";
+          }
+          else
+          {
+            res.data[i]["button"] = "none";
+          }
         }
 
         setData(res.data);
       });
-  }, []);
+  });
+
+
+  const downloadHandler = (id) => {
+
+    axios.get("http://localhost:8080/student/get_leave_form_file/"+id, { headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")}, responseType: "blob" }).then(res => {
+          const file = new Blob([res.data], {type: "application/pdf"});
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+
+            document.getElementById("button-1-"+id).style.display='';
+            document.getElementById("button-2-"+id).style.display='none';
+      });
+
+  }
+
+
+  const generateHandler = (id) => {
+
+    const temp = {request_id: id, user_id: sessionStorage.getItem("user_id")}
+
+    axios.post("http://localhost:8080/student/add_leave_form_file",{ headers: {'Content-Type': 'application/json','x-auth-header': sessionStorage.getItem("token")}, temp}).then((res) => {
+        document.getElementById("button-1-"+id).style.display='none';
+        document.getElementById("button-2-"+id).style.display='';
+
+    });
+  }
 
   return (
     <>
@@ -77,6 +113,12 @@ const ViewLeaveFormsStudent = () => {
                     <td>{data.to_date}</td>
                     <td>{data.reason}</td>
                     <td>{data.status}</td>
+                    <td>
+                      <span>
+                        <button id={"button-1-"+data.request_id} style={{display:data.button}} onClick={() => generateHandler(data.request_id)}>GENERATE PDF</button>
+                        <button id={"button-2-"+data.request_id} style={{display:'none'}} onClick={() => downloadHandler(data.request_id)}>DOWNLOAD</button>
+                      </span>
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -167,8 +209,7 @@ const AddLeaveForms = () => {
               <br />
 
               <label>Reason</label>
-              <input
-                type="text"
+              <textarea type="text"
                 id="reason"
                 name="reason"
                 onChange={changeHandler}

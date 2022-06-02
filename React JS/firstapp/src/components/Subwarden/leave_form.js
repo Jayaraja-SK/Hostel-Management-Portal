@@ -41,7 +41,7 @@ const ViewAllLeaveFormsSubWarden = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
 
@@ -56,7 +56,7 @@ const ViewAllLeaveFormsSubWarden = () => {
 
         setData(res.data);
       });
-  }, []);
+  });
 
   const changeHandler = (e) => {
     new_status = e.target.value;
@@ -207,7 +207,7 @@ const ViewLeaveFormsByFilterSubWarden = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
 

@@ -126,7 +126,7 @@ const ViewComplaintsStudent = () => {
 
         if(res.data.length === 0)
         {
-          notify("NO RECORDS FOUND");
+          //notify("NO RECORDS FOUND");
         }
 
 
@@ -139,7 +139,7 @@ const ViewComplaintsStudent = () => {
 
         setData(res.data);
       });
-  }, []);
+  });
 
   var new_status;
 

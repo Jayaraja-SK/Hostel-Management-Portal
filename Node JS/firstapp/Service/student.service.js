@@ -31,21 +31,25 @@ exports.addLeaveForm = function (data,callback) {
 
 }
 
-exports.getStudentDetails = function (email,callback) {
+exports.getStudentDetailsLeaveForm = function (request_id, user_id,callback) {
     var dml = `select
-    users.email, users.name, users.contact_no, students.gender, campus.campus_name, courses.course_name, students.batch
+    users.user_id, leave_form_request.request_id, users.name, users.contact_no, students.gender, campus.campus_name, courses.course_name, students.batch, leave_form_request.request_date, leave_form_request.from_date, leave_form_request.to_date, leave_form_request.reason
     from
-    users, students, courses, campus
+    users, students, courses, campus, leave_form_request
     where
     users.user_id=students.student_id
     and
-    users.email='${email}'
+    users.user_id=${user_id}
     and 
     courses.campus_id=campus.campus_id
     and
     students.campus_id=campus.campus_id
     and
-    students.course_id=courses.course_id`;
+    students.course_id=courses.course_id
+    and
+    leave_form_request.student_id=students.student_id
+    and
+    leave_form_request.request_id=${request_id}`;
 
     connection.query(dml,function(err,result) {
         if(err) throw err;
@@ -146,5 +150,11 @@ exports.changePassword = function (user_id,data,callback) {
             return callback(false);
         }
     });
+
+}
+
+
+exports.getFileName = function (request_id,callback) {
+    return callback(__dirname+'\\Leave_Requests\\'+request_id+'.pdf')
 
 }

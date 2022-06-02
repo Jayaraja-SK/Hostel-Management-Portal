@@ -49,7 +49,7 @@ const ViewAllLeaveForms = () => {
           
           setData(res.data);
         });
-    }, []);
+    });
 
     const changeHandler = (e) => {
       new_status = e.target.value;

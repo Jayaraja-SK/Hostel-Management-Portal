@@ -30,6 +30,8 @@ module.exports = function (request, response, next) {
         }
         else
         {
+            // return response.status(200).send({msg:'NO TOKEN',role:role[decoded.rule][0]});
+            
             return response.status(200).send('ACCESS DENIED');
         }
     }
