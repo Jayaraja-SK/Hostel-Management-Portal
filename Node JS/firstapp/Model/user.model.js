@@ -14,7 +14,8 @@ const userSchema=mongoose.Schema({
         minlength: 5,
         maxlength: 50
     },
-    role: String
+    role: String,
+    user_id: String
 });
 
 module.exports=mongoose.model('User',userSchema);

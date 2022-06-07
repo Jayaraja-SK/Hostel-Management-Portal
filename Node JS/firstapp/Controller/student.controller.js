@@ -92,7 +92,9 @@ exports.addFile = function (request,response) {
 exports.getFile = function (request,response) {
 
     studentService.getFileName(request.params.request_id, function(result){
-        response.sendFile(result);
+        response.sendFile(result,function () {
+            fd.unlinkSync(result, function(result){});
+        });
         //fd.unlinkSync(result, function(result){});
     });
     

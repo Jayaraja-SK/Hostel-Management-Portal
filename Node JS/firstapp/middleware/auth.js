@@ -2,15 +2,19 @@ const jwt = require('jsonwebtoken');
 const role=require('./role');
 
 module.exports = function (request, response, next) {
-    var token;
+    var token,user_id;
+
+    //console.log(request.body.headers)
     
     if(request.header('x-auth-header') === undefined)
     {
         token = request.body.headers['x-auth-header'];
+        user_id = request.body.headers['user-id'];
     }
     else
     {
         token = request.header('x-auth-header');
+        user_id = request.header('user-id')
     }
     
     if (!token)
@@ -21,9 +25,11 @@ module.exports = function (request, response, next) {
     try {
         const decoded = jwt.verify(token, "secretkey");
 
+        //console.log(decoded.role,decoded._id,decoded.user_id,user_id)
+
         if(role[decoded.role].find(function(url) {
             return url==request.baseUrl
-            }))
+            }) && decoded.user_id==user_id)
         {
             request.user=decoded
             next();

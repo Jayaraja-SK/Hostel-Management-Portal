@@ -39,9 +39,9 @@ exports.validateUser = function (data,callback) {
                 data.role = result[0].role;
                 data.user_id = result[0].user_id;
                 
-                const user = new User(_.pick(data, ['email', 'password', 'role']));
+                const user = new User(_.pick(data, ['email', 'password', 'role', 'user_id']));
 
-                const token = jwt.sign({ _id: user._id, role: user.role }, "secretkey", { expiresIn: "1h"});
+                const token = jwt.sign({ _id: user._id, user_id: user.user_id, role: user.role }, "secretkey", { expiresIn: "1h"});
 
                 return callback({bool:true,role:data.role,user_id:data.user_id,token:token});
             }
