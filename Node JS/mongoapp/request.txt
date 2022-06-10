@@ -1,0 +1,111 @@
+# ADD STUDENT
+
+{
+    "email":"admin@ssn1",
+    "name":"Jack",
+    "contact_no":1234567890,
+    "role":"STUDENT",
+    "password":"11",
+    "dob":"2000-10-01",
+    "gender":"M",
+    "batch":2019,
+    "campus_id":1,
+    "course_id":1,
+    "room_no":""
+}
+
+
+# ADD WARDEN
+
+{
+    "email":"admin@ssn5",
+    "name":"Jack",
+    "contact_no":1234567890,
+    "role":"WARDEN",
+    "password":"11",
+    "dob":"1980-10-01",
+    "doj":"2010-10-01"
+}
+
+
+# ADD MESS 
+
+{
+    "email":"admin@ssn40",
+    "name":"Jack",
+    "contact_no":1234567890,
+    "role":"MESS",
+    "password":"11",
+    "company_name":"ABC Catering",
+    "company_loc":"Adyar"
+}
+
+
+# EDIT USER
+
+{
+    "email":"admin@ssn",
+    "name":"Jack",
+    "contact_no":1234567890
+}
+
+
+# EDIT password
+
+{
+    "password":"admin",
+    "new_password":"admin1"
+}
+
+
+# EDIT MESS
+
+{
+    "company_name":"ABC Catering",
+    "company_loc":"Chrompet"
+}
+
+
+# ADD CAMPUS
+
+{
+    "campus_name":"SNU",
+    "campus_loc":"Chennai"
+}
+
+
+# ADD COURSE
+
+{
+    "degree":"BE",
+    "course_name":"IT",
+    "no_of_years":4
+}
+
+
+# ADD LEAVE FORM
+
+{
+    "student_id":3,
+    "from_date":"2022-01-03",
+    "to_date":"2022-01-10",
+    "reason":"Home"
+}
+
+
+# WARDEN STUDENT REL
+
+{
+    "warden_id": 6,
+    "campus_id": 1,
+    "batch": 2019
+}
+
+# ADD COMPLAINT REG
+
+{
+    "student_id": 10,
+    "complaint_date": "2022-05-27",
+    "complaint_type": "WIFI",
+    "complaint": "NOT WORKING"
+}
