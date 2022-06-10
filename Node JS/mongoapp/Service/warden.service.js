@@ -22,7 +22,7 @@ const connection = mysql.createConnection({
 const MongoClient = require('mongodb').MongoClient;
 
 
-const uri = 'mongodb+srv://hosteluser:hostel@cluster0.xeeco.mongodb.net/?retryWrites=true&w=majority';
+const uri = <enter_uri>;
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 
