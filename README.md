@@ -1,5 +1,11 @@
 # Hostel Management Portal
 
+## Technologies Used
+
+- Node.js
+- React.js
+- MySQL
+
 ## React JS
 
 - Go to `React JS/firstapp`
@@ -23,7 +29,7 @@
 ![plot](Screenshots/img1.png)<br/><br/>
 
 
-### ADMIN's FUNCTIONALITIES
+### SUPER WARDEN's DASHBOARD
 
 1. ADD CAMPUS AND COURSES<br/><br/>
 ![plot](Screenshots/img2.png)<br/>
@@ -50,3 +56,33 @@
 
 7. VIEW COMPLAINTS<br/><br/>
 ![plot](Screenshots/img13.png)<br/><br/>
+
+
+### WARDEN's DASHBOARD
+
+![plot](Screenshots/img14.png)<br/><br/>
+
+
+### STUDENT's DASHBOARD
+
+1. SEND LEAVE FORM REQUEST<br/><br/>
+![plot](Screenshots/img15.png)<br/><br/>
+
+2. VIEW LEAVE FORM REQUESTS<br/><br/>
+![plot](Screenshots/img16.png)<br/><br/>
+
+3. REGISTER AND VIEW COMPLAINTS<br/><br/>
+![plot](Screenshots/img17.png)<br/>
+![plot](Screenshots/img18.png)<br/><br/>
+
+4. CANCEL MESS BILL<br/><br/>
+![plot](Screenshots/img19.png)<br/><br/>
+
+
+### MESS INCHARGE's DASHBOARD
+
+1. VIEW OVERALL BILL CANCELLATIONS<br/><br/>
+![plot](Screenshots/img20.png)<br/><br/>
+
+2. VIEW STUDENTS LIST AND THEIR BILL CANCELLATIONS<br/><br/>
+![plot](Screenshots/img21.png)<br/><br/>
