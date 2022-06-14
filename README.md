@@ -24,8 +24,7 @@
 
 
 ### ADMIN's FUNCTIONALITIES
-1. ADD CAMPUS AND COURSES
-<br>
+1. ADD CAMPUS AND COURSES<br>
 ![plot](Screenshots/img2.png)<br>
 ![plot](Screenshots/img3.png)<br>
 
