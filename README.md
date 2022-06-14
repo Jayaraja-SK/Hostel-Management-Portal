@@ -24,11 +24,11 @@
 
 
 ### ADMIN's FUNCTIONALITIES
-1. ADD CAMPUS AND COURSES<br>
+1. ADD CAMPUS AND COURSES<br/><br/>
 ![plot](Screenshots/img2.png)<br>
 ![plot](Screenshots/img3.png)<br>
 
-2. VIEW, EDIT AND DELETE CAMPUS AND COURSE DETAIL
+2. VIEW, EDIT AND DELETE CAMPUS AND COURSE DETAILS
 ![plot](Screenshots/img4.png)<br>
 ![plot](Screenshots/img5.png)<br>
 
