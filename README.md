@@ -8,15 +8,15 @@
 
 ## React JS
 
-- Go to `React JS/firstapp`
+- Go to the app's directory - `cd React JS/firstapp`
 - Install dependencies - `npm install`
-- Start a React App - `npm start`
+- Start the React App - `npm start`
 - React App runs in port - 3000
 
 
 ## Node JS
 
-- Go to `Node JS/firstapp`
+- Go to the app's directory `cd Node JS/firstapp`
 - Configure `.env` file by adding your MySQL Database name and Password
 - Install dependencies - `npm install`
 - Start the server - `node app.js`
