@@ -15,3 +15,15 @@
 - Install dependencies - `npm install`
 - Start the server - `node app.js`
 - Node runs in port - 8080
+
+
+## Screenshots
+
+### LOGIN
+![plot](Screenshots/img1.png)<br>
+
+
+### ADMIN
+1. ADD CAMPUS AND COURSES
+![plot](Screenshots/img2.png)<br>
+![plot](Screenshots/img3.png)<br>
