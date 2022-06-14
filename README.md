@@ -10,7 +10,7 @@
 
 ## Node JS
 
-- Go to `React JS/firstapp`
+- Go to `Node JS/firstapp`
 - Configure `.env` file by adding your MySQL Database name and Password
 - Install dependencies - `npm install`
 - Start the server - `node app.js`
@@ -25,6 +25,7 @@
 
 ### ADMIN's FUNCTIONALITIES
 1. ADD CAMPUS AND COURSES
+<br>
 ![plot](Screenshots/img2.png)<br>
 ![plot](Screenshots/img3.png)<br>
 
