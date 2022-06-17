@@ -1,5 +1,9 @@
 # Hostel Management Portal
 
+## Description
+
+Developed a Web application to benefit the students, wardens and mess in-charges at College by integrating different tasks carried out manually into one single application
+
 ## Technologies Used
 
 - Node.js
